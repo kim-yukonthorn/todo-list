@@ -2,7 +2,7 @@ FROM node:18-alpine AS build
 WORKDIR /app
 COPY todo-list/package*.json ./
 RUN npm ci
-COPY todo-ui .
+COPY todo-list .
 RUN npm run build
 
 FROM node:18-alpine
