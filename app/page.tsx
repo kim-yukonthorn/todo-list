@@ -94,6 +94,14 @@ export default function Page() {
       tags: [],
       completed: true,
     },
+    {
+      id: "8",
+      title: "Test manually add task",
+      description: "Manually add task",
+      date: "22 Jan 2023",
+      tags: [],
+      completed: true,
+    }
   ])
 
   const [selectedTaskId, setSelectedTaskId] = useState<string>("3")
