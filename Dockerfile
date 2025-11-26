@@ -1,6 +1,6 @@
 FROM node:18-alpine AS build
 WORKDIR /app
-COPY todo-ui/package*.json ./
+COPY todo-list/package*.json ./
 RUN npm ci
 COPY todo-ui .
 RUN npm run build
