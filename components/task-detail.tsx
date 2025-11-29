@@ -1,13 +1,33 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import type { Task } from "@/app/page"
-import { FileIcon, MessageCircle, Reply, Paperclip } from "lucide-react"
+import { FileIcon, MessageCircle, Reply, Paperclip, Edit2, Check, X } from "lucide-react"
 
 interface TaskDetailProps {
   task: Task
+  onUpdateTask: (id: string, updates: Partial<Task>) => void
 }
 
-export default function TaskDetail({ task }: TaskDetailProps) {
+export default function TaskDetail({ task, onUpdateTask }: TaskDetailProps) {
+  const [isEditingDescription, setIsEditingDescription] = useState(false)
+  const [editedDescription, setEditedDescription] = useState(task.description)
+
+  useEffect(() => {
+    setEditedDescription(task.description)
+    setIsEditingDescription(false)
+  }, [task.id, task.description])
+
+  const handleSaveDescription = () => {
+    onUpdateTask(task.id, { description: editedDescription })
+    setIsEditingDescription(false)
+  }
+
+  const handleCancelEdit = () => {
+    setEditedDescription(task.description)
+    setIsEditingDescription(false)
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -16,8 +36,49 @@ export default function TaskDetail({ task }: TaskDetailProps) {
       </div>
 
       <div>
-        <p className="text-sm text-muted-foreground mb-2">My Work Task</p>
-        <p className="text-sm text-foreground leading-relaxed">{task.description}</p>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-sm text-muted-foreground">My Work Task</p>
+          {!isEditingDescription && (
+            <button
+              onClick={() => setIsEditingDescription(true)}
+              className="text-blue-500 hover:text-blue-600 transition-colors"
+              aria-label="Edit description"
+            >
+              <Edit2 size={16} />
+            </button>
+          )}
+        </div>
+        {isEditingDescription ? (
+          <div className="space-y-2">
+            <textarea
+              value={editedDescription}
+              onChange={(e) => setEditedDescription(e.target.value)}
+              className="w-full p-2 text-sm text-foreground leading-relaxed border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              rows={4}
+              autoFocus
+            />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleSaveDescription}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+              >
+                <Check size={14} />
+                Save
+              </button>
+              <button
+                onClick={handleCancelEdit}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-muted text-foreground rounded-md hover:bg-muted/80 transition-colors"
+              >
+                <X size={14} />
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">
+            {task.description || "No description. Click edit to add one."}
+          </p>
+        )}
       </div>
 
       <div className="space-y-3">
