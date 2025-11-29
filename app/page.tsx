@@ -129,6 +129,10 @@ export default function Page() {
     setTasks(tasks.filter((t) => t.id !== id))
   }
 
+  const handleUpdateTask = (id: string, updates: Partial<Task>) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, ...updates } : t)))
+  }
+
   return (
     <div className="flex h-screen bg-background text-foreground">
       <Sidebar collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} />
@@ -168,7 +172,7 @@ export default function Page() {
 
         {selectedTask && (
           <div className="w-80 border-l border-border p-6 overflow-y-auto bg-card">
-            <TaskDetail task={selectedTask} />
+            <TaskDetail task={selectedTask} onUpdateTask={handleUpdateTask} />
           </div>
         )}
       </div>
