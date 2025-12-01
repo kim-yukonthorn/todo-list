@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import type { Task } from "@/app/page"
+import type { Task } from "@/lib/types"
 import { FileIcon, MessageCircle, Reply, Paperclip, Edit2, Check, X } from "lucide-react"
 
 interface TaskDetailProps {

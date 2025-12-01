@@ -1,24 +1,12 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Plus } from "lucide-react"
 import Sidebar from "@/components/sidebar"
 import TaskList from "@/components/task-list"
 import TaskDetail from "@/components/task-detail"
-
-export interface Task {
-  id: string
-  title: string
-  description: string
-  date: string
-  time?: string
-  tags: string[]
-  completed: boolean
-  assignee?: string
-  type?: string
-  attachments?: Array<{ name: string; date: string }>
-  comments?: Array<{ author: string; text: string; time: string }>
-}
+import type { Task } from "@/lib/types"
 
 export default function Page() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -154,10 +142,18 @@ export default function Page() {
             <p className="text-muted-foreground mb-6">Today, 22 April</p>
 
             <div className="flex gap-4 border-b border-border pb-4">
-              <button className="text-blue-500 font-medium hover:text-blue-600">List</button>
-              <button className="text-muted-foreground hover:text-foreground">Board</button>
-              <button className="text-muted-foreground hover:text-foreground">Timeline</button>
-              <button className="text-muted-foreground hover:text-foreground">Calendar</button>
+              <Link href="/" className="text-blue-500 font-medium hover:text-blue-600">
+                List
+              </Link>
+              <Link href="/board" className="text-muted-foreground hover:text-foreground">
+                Board
+              </Link>
+              <button className="text-muted-foreground hover:text-foreground" type="button">
+                Timeline
+              </button>
+              <button className="text-muted-foreground hover:text-foreground" type="button">
+                Calendar
+              </button>
             </div>
           </div>
 

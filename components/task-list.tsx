@@ -1,6 +1,6 @@
 "use client"
 
-import type { Task } from "@/app/page"
+import type { Task } from "@/lib/types"
 import { Trash2 } from "lucide-react"
 
 interface TaskListProps {
